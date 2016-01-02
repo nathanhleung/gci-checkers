@@ -2,6 +2,7 @@ class Checkers {
   constructor(selector, options) {
     this.selector = selector;
     this.options = options;
+    // So a "can't read property x of undefined" error doesn't pop up
     if (typeof this.options.pieces === "undefined") {
       this.options.pieces = {};
     }
