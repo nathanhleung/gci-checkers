@@ -1,3 +1,9 @@
+/**
+ * Creates a new checkers game
+ * @param selector - Selector to put the game inside
+ * @param [options] - Options for the game (colors, size, etc)
+ * @class
+ */
 class Checkers {
   constructor(selector, options) {
     this.selector = selector;
@@ -11,25 +17,32 @@ class Checkers {
     }
     this.board = Checkers.generateBoard(this.options.size || Checkers.defaults.size);
     this.resetPieces();
-    /**
-     * Key:
-     * Red is 1
-     * Black is -1
-     * Nothing is 0
-     */
+    // Red goes first
     this.turn = "red";
     this.render();
   }
+  /**
+   * Generates an empty board
+   * @param {number} size - The size of the board to generate
+   */
   static generateBoard(size) {
     let board = [];
+    // Create rows
     for (let row = 0; row < size; row++) {
       board.push([]);
+      // Create squares, each with value 0 (no piece)
       for (let square = 0; square < size; square++) {
         board[row].push(0);
       }
     }
     return board;
   }
+  /**
+   * Creates the initial layout of pieces
+   * A red piece is 1, a black piece is -1
+   * A red king is 2, a black king is -2
+   * An empty square is 0
+   */
   resetPieces() {
     for (let row in this.board) {
       for (let square in this.board[row]) {
@@ -57,6 +70,9 @@ class Checkers {
       }
     }
   }
+  /**
+   * Generates HTML from the current state of the board
+   */
   generateHTML() {
     $(this.selector).append(`
       <p class="game-message">
@@ -73,6 +89,9 @@ class Checkers {
     }
     $(this.selector).append(table);
   }
+  /**
+   * Applies the colors that were provided in the options object
+   */
   applyStyles() {
     // getElementsByClassName returns HTMLCollection, not array, so forEach doesn't exist as a method on it
     [].forEach.call(document.getElementsByClassName('square-red'), (el) => {
@@ -88,6 +107,11 @@ class Checkers {
       el.style.backgroundColor = this.options.pieces.black || Checkers.defaults.pieces.black;
     });
   }
+  /**
+   * Generates a row of squares (tr elements) based on the current state of the board
+   * @param {HTMLElement} tr - The <tr> to generate squares for
+   * @param {number} row - The row on the board
+   */
   generateSquares(tr, row) {
     for (let square in this.board[row]) {
       let td = document.createElement("td");
@@ -111,6 +135,10 @@ class Checkers {
     }
     return tr;
   }
+  /**
+   * Places a piece on a square based on the state of the square
+   * @param {HTMLElement} td - The <td> to append the piece to
+   */
   placePiece(td) {
     // Data attributes are always strings
     if (td.dataset.piece !== "0") {
@@ -128,6 +156,10 @@ class Checkers {
     }
     return td;
   }
+  /**
+   * Reapplies event listeners to elements based on current turn.
+   * Event listeners are cleared after every re-render, since the container <div> is emptied.
+   */
   addEventListeners() {
     if (this.turn === "red") {
       $('.piece-red').click((event) => {
@@ -152,28 +184,46 @@ class Checkers {
       event.stopPropagation();
     });
     $(document).click(() => {
+      // Deselect piece if there's a click that's not on a square
       if (this.selected) {
         this.deselectPiece();
       }
     })
   }
+  /**
+   * Groups together render functions
+   */
   render() {
     this.generateHTML();
     this.applyStyles();
     this.addEventListeners();
   }
+  /**
+   * Same as render(), but empties the container div
+   */
   rerender() {
     $(this.selector).empty();
     this.render();
   }
+  /**
+   * Select a piece to be moved
+   * @param {HTMLElement} target - the HTML element of the piece
+   */
   selectPiece(target) {
     this.selected = $(target).get(0);
     this.selected.parentNode.style.backgroundColor = "#888";
   }
+  /**
+   * Deselect a previously selected piece
+   */
   deselectPiece() {
     this.selected.parentNode.style.backgroundColor = "black";
     this.selected = "";
   }
+  /**
+   * Move a piece
+   * @param {HTMLElement] target - the square to be moved to
+   */
   movePiece(target) {
     if (this.canMove(target)) {
       // Force from string to number (dataset is a string)
@@ -202,18 +252,26 @@ class Checkers {
       }
     }
   }
+  /**
+   * Checks if the planned move is valid
+   * @param {HTMLElement} target - the planned square to move to
+   * @todo This method is long - should be cleaned up
+   */
   canMove(target) {
+    // Checks if there's a selected piece, and that there is no piece in the target element
     if (this.selected && target.dataset.piece === "0") {
       let selectedPos = JSON.parse(this.selected.parentNode.dataset.position);
       let targetPos = JSON.parse(target.dataset.position);
       // Black goes up, red goes down
       let selectedPiece = this.selected.parentNode.dataset.piece;
+      // @todo This if statement is redundant, since on a turn one can only select pieces of their color - fix this
       if (selectedPiece === "1" || selectedPiece === "-1") {
         if (this.turn === "black") {
           if (selectedPos[0] - targetPos[0] === 1 && Math.abs(selectedPos[1] - targetPos[1]) === 1) {
             return true;
           }
           if (selectedPos[0] - targetPos[0] === 2 && Math.abs(selectedPos[1] - targetPos[1]) === 2) {
+            // The averagePos is the square that's being jumped over
             let averagePos = [(selectedPos[0] + targetPos[0]) / 2, (selectedPos[1] + targetPos[1]) / 2];
             // 1 is red, -1 is black, 2 is red king, -2 is black king
             if (this.board[averagePos[0]][averagePos[1]] > 0) {
@@ -254,10 +312,18 @@ class Checkers {
     }
     return false;
   }
+  /**
+   * Checks if one can move again (for double jumps)
+   * @param {number[2]} position - the position of the last moved piece
+   * @todo
+   */
   canMoveAgain(position) {
     // Double jump support?
     // Coming soon
   }
+  /**
+   * Checks if any pieces have reached their respective opposite sides and applies king status to them
+   */
   crownKings() {
     for (let square in this.board[0]) {
       if (this.board[0][square] === -1) {
@@ -270,6 +336,9 @@ class Checkers {
       }
     }
   }
+  /**
+   * Checks if anyone has one yet
+   */
   checkWinners() {
     let redCounter = 0;
     let blackCounter = 0;
@@ -289,6 +358,9 @@ class Checkers {
     }
     return "none";
   }
+  /**
+   * Shows the winner message
+   */
   showWinMessage() {
     $(this.selector).empty();
     this.generateHTML();
@@ -298,6 +370,9 @@ class Checkers {
 }
 
 // Since ES6 doesn't have static property support
+/**
+ * Default options for a new instance of Checkers
+ */
 Checkers.defaults = {
   size: 8,
   squares: {
@@ -310,6 +385,9 @@ Checkers.defaults = {
   }
 }
 
+/**
+ * Create a new checkers game in the #checkersApp element
+ */
 let checkers = new Checkers('#checkersApp', {
   size: 8,
   squares: {
