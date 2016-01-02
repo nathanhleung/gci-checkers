@@ -1,0 +1,125 @@
+body {
+  min-height: 100vh;
+  width: 100%;
+  font-family: Lato;
+  animation: rainbowBg 10s infinite alternate;
+}
+#container {
+  width: 100%;
+  text-align: center;
+}
+#container .page-header {
+  margin-bottom: 30px;
+}
+.subdued {
+  color: #888;
+}
+.game-message > span {
+  border: 1px solid #000;
+  padding: 15px 25px;
+}
+.checkersBoard {
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px #000;
+}
+.checkersBoard > tr > td {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  vertical-align: middle;
+  color: #fff;
+}
+.checkersBoard > tr > td > .piece {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa, 2px 2px 0px #aaa;
+}
+.checkersBoard > tr > td > .piece.piece-king::after {
+  content: '👑';
+  color: #daa520;
+  font-size: 1.5rem;
+  display: block;
+  position: relative;
+}
+@-moz-keyframes rainbowBg {
+  0% {
+    background: hsl(0, 100%, 95%);
+  }
+  16.666666666666668% {
+    background: hsl(60, 100%, 95%);
+  }
+  33.333333333333336% {
+    background: hsl(120, 100%, 95%);
+  }
+  50% {
+    background: hsl(180, 100%, 95%);
+  }
+  66.66666666666667% {
+    background: hsl(240, 100%, 95%);
+  }
+  83.33333333333334% {
+    background: hsl(300, 100%, 95%);
+  }
+}
+@-webkit-keyframes rainbowBg {
+  0% {
+    background: hsl(0, 100%, 95%);
+  }
+  16.666666666666668% {
+    background: hsl(60, 100%, 95%);
+  }
+  33.333333333333336% {
+    background: hsl(120, 100%, 95%);
+  }
+  50% {
+    background: hsl(180, 100%, 95%);
+  }
+  66.66666666666667% {
+    background: hsl(240, 100%, 95%);
+  }
+  83.33333333333334% {
+    background: hsl(300, 100%, 95%);
+  }
+}
+@-o-keyframes rainbowBg {
+  0% {
+    background: hsl(0, 100%, 95%);
+  }
+  16.666666666666668% {
+    background: hsl(60, 100%, 95%);
+  }
+  33.333333333333336% {
+    background: hsl(120, 100%, 95%);
+  }
+  50% {
+    background: hsl(180, 100%, 95%);
+  }
+  66.66666666666667% {
+    background: hsl(240, 100%, 95%);
+  }
+  83.33333333333334% {
+    background: hsl(300, 100%, 95%);
+  }
+}
+@keyframes rainbowBg {
+  0% {
+    background: hsl(0, 100%, 95%);
+  }
+  16.666666666666668% {
+    background: hsl(60, 100%, 95%);
+  }
+  33.333333333333336% {
+    background: hsl(120, 100%, 95%);
+  }
+  50% {
+    background: hsl(180, 100%, 95%);
+  }
+  66.66666666666667% {
+    background: hsl(240, 100%, 95%);
+  }
+  83.33333333333334% {
+    background: hsl(300, 100%, 95%);
+  }
+}
