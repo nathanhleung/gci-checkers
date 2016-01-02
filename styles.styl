@@ -1,0 +1,54 @@
+body
+  min-height 100vh
+  width 100%
+  font-family Lato
+  animation rainbowBg 10s infinite alternate
+  
+@keyframes rainbowBg
+  for num in (0..5)
+    {(100 / 6) * num}\%
+      background unquote("hsl(" + (360 / 6) * num + ", 100%, 95%)")
+
+#container
+  width 100%
+  text-align center
+  
+  .page-header
+    margin-bottom 30px
+  
+.subdued
+  color #888
+
+square-height = 50px
+
+.game-message > span
+  border 1px solid black
+  padding 15px 25px
+
+.checkersBoard
+  margin 0 auto
+  box-shadow 0px 0px 10px black
+
+.checkersBoard > tr > td
+  height square-height
+  width square-height
+  text-align center
+  vertical-align middle
+  color white
+  
+  > .piece
+    height square-height * 0.7
+    width square-height * 0.7
+    border-radius 50%
+    margin 0 auto
+    stacked-shadows = ''
+    for num in (1..10)
+      stacked-shadows += '2px 2px 0px #aaa, '
+    box-shadow unquote(stacked-shadows + '2px 2px 0px #aaa')
+    
+    &.piece-king::after
+      content '👑'
+      color goldenrod
+      font-size 1.5rem
+      display block
+      position relative
