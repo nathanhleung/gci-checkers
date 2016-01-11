@@ -7,7 +7,7 @@ A small Javascript checkers game.
 * Babel - ES6 transpiler
 
 ## Link
-[CheckersJS](https://www.nathanhleung.com/checkersjs/)
+[CheckersJS](https://xyz.nathanhleung.com/checkersjs/)
 
 ## License
 [ISC](https://github.com/nathanhleung/checkersjs/blob/master/LICENSE)
