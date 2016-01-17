@@ -337,7 +337,7 @@ class Checkers {
     }
   }
   /**
-   * Checks if anyone has one yet
+   * Checks if anyone has won yet
    */
   checkWinners() {
     let redCounter = 0;
