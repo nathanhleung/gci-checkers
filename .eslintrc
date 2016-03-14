@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb/base",
+  // Doesn't work well in a browser environment
+  "rules": {
+    "no-param-reassign": 0,
+    // http.Server causes problems
+    "new-cap": 1,
+    // For future reference some vars are unused
+    "no-unused-vars": 1,
+    // Controllers don't always need to return
+    "consistent-return": 1,
+    // Allow function hoisting to slip
+    "no-use-before-define": [2, "nofunc"],
+    // I prefer the full arrow function style
+    "arrow-body-style": 0
+  }
+}

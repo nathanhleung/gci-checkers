@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    meta(name="description" content=description)
+    meta(name="viewport" content="width=device-width,initial-scale=1.0")
+    meta(charset="utf-8")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato")
+    link(rel="stylesheet" href="css/styles.css")
+  body
+    block content
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js")
+    script(src="https://code.jquery.com/jquery-2.1.4.min.js")
+    script(src="/socket.io/socket.io.js")
+    script(src="js/Checkers.js")
+    block scripts
